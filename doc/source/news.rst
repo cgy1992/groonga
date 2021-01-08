@@ -7,6 +7,40 @@
 News
 ====
 
+.. _release-10-1-1:
+
+Release 10.1.1 - 2021-01-29
+---------------------------
+
+Improvements
+^^^^^^^^^^^^
+
+* [:doc:`reference/commands/select`] Added support for outputting UInt64 value in Apache Arrow fromat.
+
+  * We need to use command version 3 to output Apache Arrow format.
+
+* [optimizer] Improved optimizer as below for improved performance.
+
+  *
+  *
+  *
+
+  * The optimizer is invalid in default. We need to set environment value as below.
+
+    * ``GRN_EXPR_OPTIMIZE=yes``
+    * ``GRN_ORDER_BY_ESTIMATED_SIZE_ENABLE=yes``
+
+* [:doc:`/reference/functions/between`] Improved performance by the following improvements.
+
+  * Improved the accuracy of a decision whether the between use sequential search or not.
+  * 
+
+Fixes
+^^^^^
+
+Thanks
+^^^^^^
+
 .. _release-10-1-0:
 
 Release 10.1.0 - 2020-12-29
