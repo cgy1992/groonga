@@ -38,6 +38,8 @@ Improvements
 Fixes
 ^^^^^
 
+* [:doc:`reference/functions/sub_filter`] fixed a bug that ``sub_filter`` doesn't work in ``slices[].filter``.
+
 Thanks
 ^^^^^^
 
