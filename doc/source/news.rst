@@ -35,10 +35,61 @@ Improvements
   * Improved the accuracy of a decision whether the between use sequential search or not.
   * 
 
+* [:doc:`reference/commands/select`] Improved performance for a prefix search.
+
+  * For example, the performance of the following prefix search by using "*" improved.
+
+    .. code-block::
+
+       table_create Memos TABLE_PAT_KEY ShortText
+       table_create Contents TABLE_PAT_KEY ShortText   --normalizer NormalizerAuto
+       column_create Contents entries_key_index COLUMN_INDEX Memos _key
+
+       load --table Memos
+       [
+       {"_key": "(groonga) Start to try!"},
+       {"_key": "(mroonga) Installed"},
+       {"_key": "(groonga) Upgraded!"}
+       ]
+
+       select \
+         --table Memos \
+         --match_columns _key \
+         --query '\\(groonga\\)*'
+
 Fixes
 ^^^^^
 
 * [:doc:`reference/functions/sub_filter`] fixed a bug that ``sub_filter`` doesn't work in ``slices[].filter``.
+
+  * For example, the result of ``sub_filter`` was 0 records by the following query.
+
+    .. code-block::
+
+       table_create Users TABLE_HASH_KEY ShortText
+       column_create Users age COLUMN_SCALAR UInt8
+
+       table_create Memos TABLE_NO_KEY
+       column_create Memos user COLUMN_SCALAR Users
+       column_create Memos content COLUMN_SCALAR Text
+
+       load --table Users
+       [
+       {"_key": "alice", "age": 9},
+       {"_key": "bob",   "age": 29}
+       ]
+
+       load --table Memos
+       [
+       {"user": "alice", "content": "hello"},
+       {"user": "bob",   "content": "world"},
+       {"user": "alice", "content": "bye"},
+       {"user": "bob",   "content": "yay"}
+       ]
+
+       select \
+         --table Memos \
+         --slices[adult].filter '_id > 1 && sub_filter(user, "age >= 18")'
 
 Thanks
 ^^^^^^
