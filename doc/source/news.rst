@@ -19,16 +19,16 @@ Improvements
 
   * We need to use command version 3 to output Apache Arrow format.
 
-* [optimizer] Improved optimizer as below for improved performance.
+* [:doc:`reference/functions/query`] Added support for optimization of "order by estimated size".
 
-  *
-  *
-  *
+  * Normally, we can search at high speed when we first execute a condition which number of hits is a little.
 
-  * The optimizer is invalid in default. We need to set environment value as below.
+    * The "B (件数が少ない) && A (件数が多い)" faster than "A (件数が多い) && B (件数が少ない)".
 
-    * ``GRN_EXPR_OPTIMIZE=yes``
-    * ``GRN_ORDER_BY_ESTIMATED_SIZE_ENABLE=yes``
+  * This is a known optimization. However we need reorder conditions by ourselves.
+
+  * Groongaはヒット数を推定する機能を持っているので、これを使って、ヒット数の少ない条件を先頭に並び替えて実行できます。
+  * この最適化は ``GRN_ORDER_BY_ESTIMATED_SIZE_ENABLE=yes`` で有効になります。
 
 * [:doc:`/reference/functions/between`] Improved performance by the following improvements.
 
